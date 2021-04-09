@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Type des produits | ADMIN{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+
+    <h1 class="h3 mb-4 text-gray-800">Types des produits</h1>
+    <a class="btn btn-primary btn-sm " href="{{ path('product_types_new') }}">Ajouter</a>
+
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Type de produit</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product_type in product_types %}
+            <tr>
+                <td>{{ loop.index}}</td>
+                <td>{{ product_type.productType }}</td>
+                <td>
+                    
+                    <a href="{{ path('product_types_edit', {'id': product_type.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sous-catégories | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <a href="{{ path('sub_categories_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1>Ajouter une sous-catégorie</h1>
+
+    {{ include('sub_categories/_form.html.twig') }}
+
+
+
+</div>
+{% endblock %}

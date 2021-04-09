@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories | ADMIN{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+
+    <h1 class="h3 mb-4 text-gray-800">Catégories</h1>
+    <a class="btn btn-primary btn-sm " href="{{ path('categorie_new') }}">Ajouter</a>
+
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Categorie</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ categorie.categorie }}</td>
+                <td>{{ categorie.isActive ? '<span class="bg-success badge status-badge">activé</span>' : '<span class="bg-danger badge status-badge">désactivé</span>' }}</td>
+                <td>
+                    <a href="{{ path('categorie_edit', {'id': categorie.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+{% endblock %}

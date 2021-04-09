@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Options | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+
+    <h1 class="h3 mb-4 text-gray-800">Options</h1>
+    <a class="btn btn-primary btn-sm " href="{{ path('options_new') }}">Ajouter</a>
+    
+    <hr>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Nombre maximum d'options</th>
+                <th>Prix Option Supplémentaire</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for option in options %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ option.nom }}</td>
+                <td>{{ option.nombreMaximumOption }}</td>
+                <td>{{ option.prixOptionSupp |format_currency('EUR') }}</td>
+                <td>
+                    <a href="{{ path('options_edit', {'id': option.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+{% endblock %}

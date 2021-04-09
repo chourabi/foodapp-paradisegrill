@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    
+    <a href="{{ path('products_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>.
+    <h1>Modifier produit</h1>
+    
+    <img src="/img/produits/{{product.photoURL}}" width="150px" class="my-5" />
+
+    {{ include('products/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    {{ include('products/_delete_form.html.twig') }}
+</div>
+
+{% endblock %}

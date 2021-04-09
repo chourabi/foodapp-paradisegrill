@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Items | Admin{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <a href="{{ path('option_items_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1 class="h3 mb-4 text-gray-800">Ajouter un item</h1>
+
+    {{ include('option_items/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+
+
+    {{ include('option_items/_delete_form.html.twig') }}
+</div>
+
+{% endblock %}

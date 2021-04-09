@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter Options | Admin{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <a href="{{ path('options_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1>Ajouter une nouvelle option</h1>
+
+    {{ include('options/_form.html.twig') }}
+
+</div>
+{% endblock %}

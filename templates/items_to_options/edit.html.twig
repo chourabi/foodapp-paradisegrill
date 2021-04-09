@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ItemsToOptions{% endblock %}
+
+{% block body %}
+    <h1>Edit ItemsToOptions</h1>
+
+    {{ include('items_to_options/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('items_to_options_index') }}">back to list</a>
+
+    {{ include('items_to_options/_delete_form.html.twig') }}
+{% endblock %}

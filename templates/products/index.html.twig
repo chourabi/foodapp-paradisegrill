@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+
+    <h1 class="h3 mb-4 text-gray-800">Produits</h1>
+    <a class="btn btn-primary btn-sm " href="{{ path('products_new') }}">Ajouter</a>
+
+    <hr>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <img src="/img/produits/{{ product.photoURL }}" width="50px" alt="">
+                </td>
+                <td>{{ product.label }}</td>
+                <td> {{ product.price|format_currency('EUR') }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.isActive ? '<span class="bg-success badge status-badge">activé</span>' : '<span class="bg-danger badge status-badge">désactivé</span>' }}</td>
+                
+                <td>
+                    <a href="{{ path('products_edit', {'id': product.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+{% endblock %}

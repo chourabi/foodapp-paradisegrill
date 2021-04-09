@@ -1,0 +1,32 @@
+.home-logo{
+    width: 150px;
+    background-color: black;
+}
+
+#content{
+    width: 100%;
+}
+
+.status-badge{
+    color: white;
+}
+
+
+.checkbox-bloc-btn{
+    display: block;
+}
+
+
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    height: 38px;
+    padding: 4px 1px 1px 1px;
+}
+
+.form-control {
+    color: #6e707e;
+    background-color: #f6f6f6;
+    border: 1px solid #f6f6f6;
+}

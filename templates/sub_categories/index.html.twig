@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sous-catégories | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+
+    <h1 class="h3 mb-4 text-gray-800">Sous-catégories</h1>
+    <a class="btn btn-primary btn-sm" href="{{ path('sub_categories_new') }}">Create new</a>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Catégorie parente</th>
+                <th>Type de produit</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sub_category in sub_categories %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ sub_category.label }}</td>
+                <td>{{ sub_category.categorie }}</td>
+                <td>{{ sub_category.productType }}</td>
+                
+                
+                <td>{{ sub_category.isActive ? '<span class="bg-success badge status-badge">activé</span>' : '<span class="bg-danger badge status-badge">désactivé</span>' }}</td>
+                <td>
+                    
+                    <a href="{{ path('sub_categories_edit', {'id': sub_category.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+
+</div>
+{% endblock %}

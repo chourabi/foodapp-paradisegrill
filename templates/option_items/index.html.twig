@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Items | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+
+    <h1 class="h3 mb-4 text-gray-800">Items</h1>
+    <a class="btn btn-primary btn-sm " href="{{ path('option_items_new') }}">Ajouter</a>
+
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for option_item in option_items %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ option_item.Nom }}</td>
+                <td>{{ option_item.isActive ? '<span class="bg-success badge status-badge">activé</span>' : '<span class="bg-danger badge status-badge">désactivé</span>' }}</td>
+                <td>
+                    <a href="{{ path('option_items_edit', {'id': option_item.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

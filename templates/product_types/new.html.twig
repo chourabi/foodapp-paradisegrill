@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Type des produits | ADMIN{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+        <a href="{{ path('product_types_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+        <h1 class="h3 mb-4 text-gray-800">Ajouter Type de produit</h1>
+
+        {{ include('product_types/_form.html.twig', {'button_label': 'Ajouter'}) }}
+    
+        
+    
+    </div>
+{% endblock %}

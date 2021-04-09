@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories | ADMIN{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <a href="{{ path('categorie_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1 class="h3 mb-4 text-gray-800">Ajouter une nouvelle catégorie</h1>
+
+    {{ include('categorie/_form.html.twig') }}
+
+</div>
+{% endblock %}

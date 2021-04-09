@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ItemsToOptions{% endblock %}
+
+{% block body %}
+    <h1>ItemsToOptions</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ items_to_option.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('items_to_options_index') }}">back to list</a>
+
+    <a href="{{ path('items_to_options_edit', {'id': items_to_option.id}) }}">edit</a>
+
+    {{ include('items_to_options/_delete_form.html.twig') }}
+{% endblock %}
