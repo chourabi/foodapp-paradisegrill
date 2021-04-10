@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,12 +26,17 @@ class ProductsType extends AbstractType
                 'label' => 'Nom',
                 'attr'=>array('class'=>'form-control','placeholder'=>'')
             ))
+            ->add('prepTime',IntegerType::class, array(
+                'required' => false,
+                'label' => 'Temp de préparation ( en minute )',
+                'attr'=>array('class'=>'form-control','placeholder'=>'')
+            ))
             ->add('price',NumberType::class, array(
                 'required' => true,
                 'label' => 'Prix',
                 'attr'=>array('class'=>'form-control','placeholder'=>'')
             ))
-            ->add('quantity',NumberType::class, array(
+            ->add('quantity',IntegerType::class, array(
                 'required' => true,
                 'label' => 'Quantité',
                 'attr'=>array('class'=>'form-control','placeholder'=>'')

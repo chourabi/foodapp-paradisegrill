@@ -20,6 +20,7 @@
                 <th>Nom</th>
                 <th>Prix</th>
                 <th>Quantité</th>
+                <th>Affichage</th>
                 <th>Statut</th>
                 <th>Actions</th>
             </tr>
@@ -34,6 +35,8 @@
                 <td>{{ product.label }}</td>
                 <td> {{ product.price|format_currency('EUR') }}</td>
                 <td>{{ product.quantity }}</td>
+                <td>{{ product.isPromoted ? '<span class="bg-warning badge status-badge">En premier</span>' : '<span class="bg-info badge status-badge">normal</span>' }}</td>
+                
                 <td>{{ product.isActive ? '<span class="bg-success badge status-badge">activé</span>' : '<span class="bg-danger badge status-badge">désactivé</span>' }}</td>
                 
                 <td>

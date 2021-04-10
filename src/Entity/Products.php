@@ -52,6 +52,16 @@ class Products
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $prepTime;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPromoted;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +147,30 @@ class Products
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPrepTime(): ?int
+    {
+        return $this->prepTime;
+    }
+
+    public function setPrepTime(?int $prepTime): self
+    {
+        $this->prepTime = $prepTime;
+
+        return $this;
+    }
+
+    public function getIsPromoted(): ?bool
+    {
+        return $this->isPromoted;
+    }
+
+    public function setIsPromoted(bool $isPromoted): self
+    {
+        $this->isPromoted = $isPromoted;
 
         return $this;
     }
