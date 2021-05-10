@@ -34,9 +34,15 @@ class OptionItems
      */
     private $itemsToOptions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProductOrdreItems::class, mappedBy="item")
+     */
+    private $productOrdreItems;
+
     public function __construct()
     {
         $this->itemsToOptions = new ArrayCollection();
+        $this->productOrdreItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,5 +107,35 @@ class OptionItems
 
     public function __toString(){
         return $this->Nom;
+    }
+
+    /**
+     * @return Collection|ProductOrdreItems[]
+     */
+    public function getProductOrdreItems(): Collection
+    {
+        return $this->productOrdreItems;
+    }
+
+    public function addProductOrdreItem(ProductOrdreItems $productOrdreItem): self
+    {
+        if (!$this->productOrdreItems->contains($productOrdreItem)) {
+            $this->productOrdreItems[] = $productOrdreItem;
+            $productOrdreItem->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductOrdreItem(ProductOrdreItems $productOrdreItem): self
+    {
+        if ($this->productOrdreItems->removeElement($productOrdreItem)) {
+            // set the owning side to null (unless already changed)
+            if ($productOrdreItem->getItem() === $this) {
+                $productOrdreItem->setItem(null);
+            }
+        }
+
+        return $this;
     }
 }

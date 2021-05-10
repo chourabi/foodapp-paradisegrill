@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OptionToProducts index{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+
+    <h1 class="h3 mb-4 text-gray-800">Options des produit</h1>
+    <a class="btn btn-primary btn-sm " href="{{ path('option_to_products_new') }}">Ajouter</a>
+
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Produit</th>
+                <th>Option</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for option_to_product in option_to_products %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ option_to_product.product }}</td>
+                <td>{{ option_to_product.productOption }}</td>
+                
+                <td>
+                    <a href="{{ path('option_to_products_edit', {'id': option_to_product.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

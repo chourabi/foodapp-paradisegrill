@@ -39,9 +39,21 @@ class Options
      */
     private $linkedItem;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OptionToProducts::class, mappedBy="productOption")
+     */
+    private $optionToProducts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProductOrdreItems::class, mappedBy="optionRef")
+     */
+    private $productOrdreItems;
+
     public function __construct()
     {
         $this->linkedItem = new ArrayCollection();
+        $this->optionToProducts = new ArrayCollection();
+        $this->productOrdreItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,5 +129,65 @@ class Options
 
     public function __toString(){
         return $this->nom;
+    }
+
+    /**
+     * @return Collection|OptionToProducts[]
+     */
+    public function getOptionToProducts(): Collection
+    {
+        return $this->optionToProducts;
+    }
+
+    public function addOptionToProduct(OptionToProducts $optionToProduct): self
+    {
+        if (!$this->optionToProducts->contains($optionToProduct)) {
+            $this->optionToProducts[] = $optionToProduct;
+            $optionToProduct->setProductOption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOptionToProduct(OptionToProducts $optionToProduct): self
+    {
+        if ($this->optionToProducts->removeElement($optionToProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($optionToProduct->getProductOption() === $this) {
+                $optionToProduct->setProductOption(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProductOrdreItems[]
+     */
+    public function getProductOrdreItems(): Collection
+    {
+        return $this->productOrdreItems;
+    }
+
+    public function addProductOrdreItem(ProductOrdreItems $productOrdreItem): self
+    {
+        if (!$this->productOrdreItems->contains($productOrdreItem)) {
+            $this->productOrdreItems[] = $productOrdreItem;
+            $productOrdreItem->setOptionRef($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductOrdreItem(ProductOrdreItems $productOrdreItem): self
+    {
+        if ($this->productOrdreItems->removeElement($productOrdreItem)) {
+            // set the owning side to null (unless already changed)
+            if ($productOrdreItem->getOptionRef() === $this) {
+                $productOrdreItem->setOptionRef(null);
+            }
+        }
+
+        return $this;
     }
 }

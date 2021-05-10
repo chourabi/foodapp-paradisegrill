@@ -22,7 +22,7 @@ class OptionsType extends AbstractType
             ))
             ->add('nombreMaximumOption',IntegerType::class, array(
                 'required' => true,
-                'label' => "Nombre maximum d'options",
+                'label' => "Nombre maximal d'options",
                 'attr'=>array('class'=>'form-control','placeholder'=>"")
             ))
             ->add('prixOptionSupp',NumberType::class, array(

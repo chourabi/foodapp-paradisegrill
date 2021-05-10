@@ -1,0 +1,85 @@
+<style>
+    #bill th{
+        text-align: center;
+    }
+</style>
+<table class="table" style="width: 100%;" id="bill">
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Liste des produits commandés</th>
+            <th>à payer</th>
+            
+            
+            
+        </tr>
+    </thead>
+<tbody >
+    {% set total = 0 %}   
+    {% for ordre in table.tableOrdres %}
+        {% if ordre.status == 0 %}
+        {% set sum = 0 %}    
+        
+
+            <tr>
+                <td style="text-align: center;">
+                    {{loop.index}}
+                </td>
+                
+                <td>
+                    <ul>
+                        {% for productOrdre in ordre.productOrdres %}
+                            {% set sum = sum + (productOrdre.unitPrice * productOrdre.quantity ) %} 
+                            
+                            <li>
+                                
+                                {{productOrdre.product.label}} X {{productOrdre.quantity}} 
+                                <ul>
+                                        
+                                    {% for item in productOrdre.productOrdreItems %}
+                                        <li style="display: inline-block;">
+                                            <span class="badge text-white bg-info">{{item.item.Nom}}</span> /
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                    
+                                
+
+                                
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    {{ sum | format_currency('EUR')  }}
+                    {% set total = total + sum %} 
+                </td>
+                
+            </tr>
+        {% endif %}
+        
+    {% endfor %}
+</tbody>
+<tfoot>
+    <tr style="background-color: #3259ca; color:white" >
+        
+        <th>Total à payer</th>
+        <th colspan="2" class="text-right" style="padding: 10px;">
+            <span>{{ total | format_currency('EUR')  }}</span>
+        </th>
+        
+
+        
+        
+        
+    </tr>
+</tfoot>
+</table>
+
+<div style="text-align: center; margin-top:25px">
+    <p> <strong>Paradise grill</strong> </p>
+    <p>Merci d'utiliser nos services</p>
+    <p>{{ "now"| format_datetime() }}</p>
+</div>
+

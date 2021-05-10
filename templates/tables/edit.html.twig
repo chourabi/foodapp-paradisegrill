@@ -1,0 +1,21 @@
+
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Tables | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <a href="{{ path('tables_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1 class="h3 mb-4 text-gray-800">Modfier table</h1>
+
+    {{ include('tables/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+
+
+    {{ include('tables/_delete_form.html.twig') }}
+</div>
+
+{% endblock %}

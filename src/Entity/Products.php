@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +63,22 @@ class Products
      * @ORM\Column(type="boolean")
      */
     private $isPromoted;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OptionToProducts::class, mappedBy="product")
+     */
+    private $productOption;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProductOrdre::class, mappedBy="product")
+     */
+    private $productOrdres;
+
+    public function __construct()
+    {
+        $this->productOption = new ArrayCollection();
+        $this->productOrdres = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -171,6 +189,71 @@ class Products
     public function setIsPromoted(bool $isPromoted): self
     {
         $this->isPromoted = $isPromoted;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OptionToProducts[]
+     */
+    public function getProductOption(): Collection
+    {
+        return $this->productOption;
+    }
+
+    public function addProductOption(OptionToProducts $productOption): self
+    {
+        if (!$this->productOption->contains($productOption)) {
+            $this->productOption[] = $productOption;
+            $productOption->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductOption(OptionToProducts $productOption): self
+    {
+        if ($this->productOption->removeElement($productOption)) {
+            // set the owning side to null (unless already changed)
+            if ($productOption->getProduct() === $this) {
+                $productOption->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @return Collection|ProductOrdre[]
+     */
+    public function getProductOrdres(): Collection
+    {
+        return $this->productOrdres;
+    }
+
+    public function addProductOrdre(ProductOrdre $productOrdre): self
+    {
+        if (!$this->productOrdres->contains($productOrdre)) {
+            $this->productOrdres[] = $productOrdre;
+            $productOrdre->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductOrdre(ProductOrdre $productOrdre): self
+    {
+        if ($this->productOrdres->removeElement($productOrdre)) {
+            // set the owning side to null (unless already changed)
+            if ($productOrdre->getProduct() === $this) {
+                $productOrdre->setProduct(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tables{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1>Table N°: {{ table.number }} 
+
+            {% if table.status == 0 %}
+            <span class="badge bg-dark text-white">
+                fermée
+            </span>
+        {% endif %}
+
+        {% if table.status == 1 %}
+            <span class="badge bg-success text-white">
+                ouverte
+            </span>
+        {% endif %}
+
+        {% if table.status == 2 %}
+            <span class="badge bg-warning text-white">
+                en cours
+            </span>
+        {% endif %}
+
+        {% if table.status == 3 %}
+            <span class="badge bg-danger text-white">
+                en envoyée
+            </span>
+        {% endif %}
+
+        </h1>
+
+
+    
+        <a class="btn btn-secondary btn-sm" href="{{ path('tables_index') }}">Retour</a>
+
+
+        <hr>
+
+        <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Liste des produits commandés</th>
+                        <th>à payer</th>
+                        
+                        
+                        
+                    </tr>
+                </thead>
+            <tbody>
+                {% set total = 0 %}   
+                {% for ordre in table.tableOrdres %}
+                    {% if ordre.status == 0 %}
+                    {% set sum = 0 %}    
+                    
+
+                        <tr>
+                            <td>
+                                {{ordre.id}}
+                            </td>
+                            
+                            <td>
+                                <ul>
+                                    {% for productOrdre in ordre.productOrdres %}
+                                        {% set sum = sum + (productOrdre.unitPrice * productOrdre.quantity ) %} 
+                                        
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    {{productOrdre.product.label}} X {{productOrdre.quantity}} 
+                                                    <ul>
+                                                          
+                                                        {% for item in productOrdre.productOrdreItems %}
+                                                            <li style="display: inline-block;">
+                                                                <span class="badge text-white bg-info">{{item.item.Nom}}</span>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <div class="col-4">
+                                                    <form action="" method="POST" onsubmit="return confirm('Êtes-vous sûr de bien vouloir supprimer cet élément?');">
+                                                        <input type="hidden" name="deleteProductOrdre" value="{{productOrdre.id}}">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger my-2">
+                                                            <i class="fas fa-trash "></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            
+
+                                            
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                {{ sum | format_currency('EUR')  }}
+                                {% set total = total + sum %} 
+                            </td>
+                            
+                        </tr>
+                    {% endif %}
+                    
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr style="background-color: #3259ca;" class="text-white">
+                    
+                    <th>Total à payer</th>
+                    <th  class="text-right">
+                        <h4>{{ total | format_currency('EUR')  }}</h4>
+                    </th>
+                    
+                    <th>
+                        <form action="" method="POST"  onsubmit="return confirm('Êtes-vous sûr de vouloir fermer cette table?');">
+                            <input type="hidden" name="closeTable" value="{{table.id}}">
+                            <button class="btn btn-success btn-sm" type="submit">Clôturer la table</button>
+                        </form>
+                    </th>
+                    
+                    
+                    
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock %}

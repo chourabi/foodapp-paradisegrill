@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New OptionToProducts{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <a href="{{ path('option_to_products_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1 class="h3 mb-4 text-gray-800">Ajouter un nouvel item</h1>
+
+    {{ include('option_to_products/_form.html.twig') }}
+
+</div>
+{% endblock %}

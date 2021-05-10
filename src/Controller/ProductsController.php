@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\OptionToProducts;
 use App\Entity\Products;
+use App\Form\OptionToProductsType;
 use App\Form\ProductsType;
 use App\Form\ProductsTypeEdit;
+use App\Repository\OptionToProductsRepository;
 use App\Repository\ProductsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -68,6 +71,7 @@ class ProductsController extends AbstractController
                     // updates the 'imagename' property to store the PDF file name
                     // instead of its contents
                     $product->setPhotoURL($newFilename);
+                    $product->setIsPromoted(false);
                     $entityManager->persist($product);
                     $entityManager->flush();
 
@@ -103,7 +107,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/{id}/edit", name="products_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Products $product): Response
+    public function edit(Request $request, Products $product,OptionToProductsRepository $optionToProductsRepository): Response
     {
         $form = $this->createForm(ProductsTypeEdit::class, $product);
         $form->handleRequest($request);
@@ -145,9 +149,30 @@ class ProductsController extends AbstractController
             return $this->redirectToRoute('products_index');
         }
 
+        $optionToProduct = new OptionToProducts();
+
+        $optionProductForm = $this->createForm(OptionToProductsType::class, $optionToProduct);
+        $optionProductForm->handleRequest($request);
+
+        if ($optionProductForm->isSubmitted() && $optionProductForm->isValid()) {
+            
+            $res = $optionToProductsRepository->findBy(array('productOption'=>$optionToProduct->getProductOption(),'product'=>$product));
+            if (sizeof($res)==0) {
+                $optionToProduct->setProduct($product);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($optionToProduct);
+                $entityManager->flush();
+                
+            }
+        }
+
+
         return $this->render('products/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'option_to_products' => $optionToProductsRepository->findBy(array('product'=>$product)),
+            'option_to_product' => $optionToProduct,
+            'optionProductForm'=>$optionProductForm->createView()
         ]);
     }
 

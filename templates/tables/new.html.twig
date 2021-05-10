@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter Table | Admin{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <a href="{{ path('tables_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1>Ajouter une nouvelle table</h1>
+
+    {{ include('tables/_form.html.twig') }}
+
+</div>
+{% endblock %}
