@@ -99,6 +99,20 @@
                             </div>
                         </div>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsetransaction"
+                            aria-expanded="true" aria-controls="collapsetransaction">
+                            <i class="fas fa-fw fa-cog"></i>
+                            <span>Gestion des transactions</span>
+                        </a>
+                        <div id="collapsetransaction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="{{path('transactions_index')}}">Tous les transaction</a>
+                                
+                            </div>
+                        </div>
+                    </li>
         
 
                     
@@ -167,14 +181,13 @@
                             </li>
 
                             <!-- Nav Item - Alerts -->
-                            <li class="nav-item dropdown no-arrow mx-1">
+                            <!--<li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-bell fa-fw"></i>
-                                    <!-- Counter - Alerts -->
+                                    
                                     <span class="badge badge-danger badge-counter">3+</span>
                                 </a>
-                                <!-- Dropdown - Alerts -->
                                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="alertsDropdown">
                                     <h6 class="dropdown-header">
@@ -215,17 +228,15 @@
                                     </a>
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                                 </div>
-                            </li>
+                            </li>-->
 
                             <!-- Nav Item - Messages -->
-                            <li class="nav-item dropdown no-arrow mx-1">
+                           <!-- <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-envelope fa-fw"></i>
-                                    <!-- Counter - Messages -->
                                     <span class="badge badge-danger badge-counter">7</span>
                                 </a>
-                                <!-- Dropdown - Messages -->
                                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="messagesDropdown">
                                     <h6 class="dropdown-header">
@@ -281,7 +292,7 @@
                                     </a>
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                                 </div>
-                            </li>
+                            </li>-->
 
                             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -356,6 +367,10 @@
                 <script src=" {{ asset('js/demo/chart-area-demo.js') }} "></script>
                 <script src=" {{ asset('/js/demo/chart-pie-demo.js') }} "></script>
                 <script src=" {{ asset('/vendor/select2/dist/js/select2.min.js') }} "></script>
+
+                <script src=" {{ asset('/vendor/datatables/jquery.dataTables.js') }} "></script>
+                <script src=" {{ asset('/vendor/datatables/dataTables.bootstrap4.js') }} "></script>
+                
                 <script src=" {{ asset('js/main.js') }} "></script>
 
         {% endblock %}

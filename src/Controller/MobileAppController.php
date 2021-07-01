@@ -66,9 +66,9 @@ class MobileAppController extends AbstractController
         return $this->json($products);
     }
 
-        /**
-     * @Route("/produit/{id}", name="api_produits_list")
-     */
+    /**
+    * @Route("/produit/{id}", name="api_produits_list")
+    */
     public function ProduitDetails($id): JsonResponse
     {
        //$products = $productsRepository->findAll();
@@ -197,7 +197,7 @@ class MobileAppController extends AbstractController
     }
 
 
-        /**
+    /**
      * @Route("/produits/parentcategory/{id}", name="api_produits_parent_category_list")
      */
     public function listProduitByMainCategory($id): JsonResponse
@@ -285,7 +285,7 @@ class MobileAppController extends AbstractController
     {
         $conn = $this->getDoctrine()->getConnection();
 
-        $sql = 'SELECT categorie.id,categorie.categorie FROM `categorie`,sub_categories WHERE categorie.id = sub_categories.categorie_id AND categorie.is_active = 1 GROUP BY categorie.id';
+        $sql = 'SELECT categorie.id,categorie.categorie,categorie.icon_class_name  FROM `categorie`,sub_categories WHERE categorie.id = sub_categories.categorie_id AND categorie.is_active = 1 GROUP BY categorie.id';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
@@ -346,7 +346,7 @@ class MobileAppController extends AbstractController
             $table = $tablesRepository->findOneBy(array('uniqueID'=>$tableID));
             
             
-            $tableOrdre = $tableOrdreRepository->findOneBy(array('status'=>0));
+            $tableOrdre = $tableOrdreRepository->findOneBy(array('status'=>0,'tableRef'=>$table));
 
 
             if ($tableOrdre == null) {
@@ -382,6 +382,11 @@ class MobileAppController extends AbstractController
                 // get the product
                 $productId = $orders[$key]['product']['id'];
                 $product = $productsRepository->findOneBy(array('id'=>$productId));
+
+                // update product quantity
+                $product->setQuantity(  (($product->getQuantity()) - $orders[$key]['quantity'] )  );
+                $this->getDoctrine()->getManager()->flush();
+
                 $productOrdre->setProduct($product);
 
                 $entityManager = $this->getDoctrine()->getManager();
@@ -461,6 +466,87 @@ class MobileAppController extends AbstractController
 
 
         return $this->json(["status"=>$table->getStatus(), 'products'=>$products]);
+        
+    }
+
+
+
+    /**
+     * @Route("/tables_list", name="api_get_tables_list"  )
+     */
+
+    public function tablesList(Request $request,
+    TablesRepository $tablesRepository
+    ): Response
+    {
+      
+
+
+            $tablesList = $tablesRepository->findAll();
+            
+            $tables = array();
+
+            foreach ($tablesList as $key => $t) {
+                array_push($tables, array( "number"=>$t->getNumber(), "status"=>$t->getStatus(),"uniqueID"=>$t->getUniqueID() )  );
+            }
+           
+        
+
+
+            return $this->json($tables);
+        
+    }
+    
+
+
+    /**
+     * @Route("/table_open/{uniqueID}", name="api_table_open"  )
+     */
+    public function openTable($uniqueID,Request $request,
+    TablesRepository $tablesRepository
+    ): Response
+    {
+      
+
+
+        try {
+            $table = $tablesRepository->findOneBy(array('uniqueID'=>$uniqueID));
+
+            
+            
+            if ($table->getStatus() == 0 ) {
+                $table->setStatus(1);
+                $this->getDoctrine()->getManager()->flush();
+            }
+            
+
+
+            return $this->json(["status"=>$table->getStatus(), "success"=>true ] );
+        } catch (\Throwable $th) {
+            return $this->json(["success"=>false ] );
+        }
+        
+    }
+
+
+
+    /**
+     * @Route("/table_check/{uniqueID}", name="api_table_check"  )
+     */
+    public function checkTableExistance($uniqueID,Request $request,
+    TablesRepository $tablesRepository
+    ): Response
+    {
+      
+
+
+        try {
+            $table = $tablesRepository->findOneBy(array('uniqueID'=>$uniqueID));
+
+            return $this->json(["success"=>true ] );
+        } catch (\Throwable $th) {
+            return $this->json(["success"=>false ] );
+        }
         
     }
 

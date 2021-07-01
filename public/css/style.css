@@ -30,3 +30,11 @@
     background-color: #f6f6f6;
     border: 1px solid #f6f6f6;
 }
+
+.table-q{
+    display: inline-block;
+    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 53px;
+}

@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transactions index{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+
+    
+    <div class="row">
+        <div class="col-sm-4">
+            {% if daylyCashFlow > 0 %}
+                <div class="card border-left-success shadow h-100 py-2">
+            {% else %}
+                <div class="card border-left-danger shadow h-100 py-2">
+            {% endif %}
+
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            {% if daylyCashFlow > 0 %}
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            {% else %}
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            {% endif %}
+                            Flux d'argent par jour
+    
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{daylyCashFlow | format_currency('EUR')}}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            {% if monthlyCashFlow > 0 %}
+                <div class="card border-left-success shadow h-100 py-2">
+            {% else %}
+                <div class="card border-left-danger shadow h-100 py-2">
+            {% endif %}
+
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            {% if monthlyCashFlow > 0 %}
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            {% else %}
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            {% endif %}
+                            Flux d'argent par mois
+    
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{monthlyCashFlow | format_currency('EUR')}} 
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-4">
+            {% if annualCashFlow > 0 %}
+                <div class="card border-left-success shadow h-100 py-2">
+            {% else %}
+                <div class="card border-left-danger shadow h-100 py-2">
+            {% endif %}
+            
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            {% if annualCashFlow > 0 %}
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            {% else %}
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            {% endif %}
+                            
+                                Flux d'argent par année
+    
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{annualCashFlow | format_currency('EUR')}}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+    </div>
+
+
+
+
+
+    <h1 class="h3 mb-4 text-gray-800">Transactions</h1>
+    <a class="btn btn-primary btn-sm " href="{{ path('transactions_new') }}">Ajouter</a>
+
+    <hr>
+
+
+    <table class="table datatable-apply">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Montant</th>
+                <th>Détails</th>
+                <th>Type</th>
+                
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.occureDate ? transaction.occureDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ transaction.amount | format_currency('EUR') }}</td>
+                <td>
+
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ transaction.title }}</h5>
+                        <small>3 days ago</small>
+                      </div>
+                      <p class="mb-1">
+                        {{ transaction.description }}
+                      </p>
+
+                </td>
+                
+                <td>
+                    {% if transaction.type == 0 %}
+                        <span class="badge badge-danger"> retrait</span>
+                    {% endif %}
+                    {% if transaction.type == 1 %}
+                        <span class="badge badge-success"> ajout</span>
+                    {% endif %}
+                    
+                </td>
+                
+                <td>
+
+                    <a href="{{ path('transactions_edit', {'id': transaction.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+    </div>
+
+{% endblock %}

@@ -34,6 +34,11 @@ class Categorie
      */
     private $subCategories;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $iconClassName;
+
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
@@ -100,5 +105,17 @@ class Categorie
 
     public function __toString(){
         return $this->categorie;
+    }
+
+    public function getIconClassName(): ?string
+    {
+        return $this->iconClassName;
+    }
+
+    public function setIconClassName(?string $iconClassName): self
+    {
+        $this->iconClassName = $iconClassName;
+
+        return $this;
     }
 }

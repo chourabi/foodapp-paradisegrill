@@ -1,16 +1,267 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}DASHBOARD | ADMIN{% endblock %}
+{% block title %}Paradise grill | ADMIN{% endblock %}
 
 
 
 {% block content %}
-    <div class="container-fluid">
+<div class="container-fluid">
 
-        <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Acceuil</h1>
+        <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+    </div>
+
+    <div class="row">
+        <!-- alerts out of stock soon -->
+        {% if soonOutOfStock | length != 0 %}
+        <div class="col-sm-12">
+            <div class="card bg-dark text-white shadow mb-3">
+                <div class="card-body">
+                    <i class="fas fa-exclamation-triangle"></i> Attention
+                    <div class="text-white-50 small">
+                        Certains de vos produits seront bientôt en rupture de stock, veuillez vérifier votre stock. <br>
+                        {% for item in soonOutOfStock %}
+                        <a class="text-white" href="{{ path('products_edit', {'id': item.id})  }}"> <span
+                                class="soon-ends-products-label">{{ item.label }}</span> </a> -
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
     </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Produits en rupture de stock
+
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+
+                                <a class="text-danger" href="{{ path('products_index') }}">
+                                    {{ outOfStockProducts | length }} produit(s)
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-drumstick-bite fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                flux monétaire (annuel)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ cashFlow | format_currency('EUR') }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tables ouvertes
+                            </div>
+                            <div class="row no-gutters align-items-center">
+
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                    <a href=" {{ path('tables_index') }} " class="text-info">
+                                        {{ openTables | length }} Table(s)
+                                    </a>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-utensils fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Avis clients</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{clientsReviews | length}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+
+    <div class="row">
+
+
+        
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+<script src=" {{ asset('/vendor/jquery/jquery.min.js') }} "></script>
+<script src=" {{ asset('/vendor/chart.js/Chart.min.js') }} "></script>
+
+<!-- Page level custom scripts -->
+<script src=" {{ asset('js/demo/chart-area-demo.js') }} "></script>
+
+<script>
+    var titles = new Array();
+    var amounts = new Array();
     
+    {% for pd in chartTransaction %}
+        
+            titles.push('{{ pd.title }}\n{{pd.description}}'); 
+            amounts.push('{{ pd.amount }}'); 
+        
+        
+    {% endfor %}
+
+
+
+
+    $(document).ready(function () {
+        // Area Chart Example
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: titles,
+                datasets: [{
+                    label: "Earnings",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: amounts,
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function (value, index, values) {
+                                return '$' + number_format(value);
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: 'index',
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function (tooltipItem, chart) {
+                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                        }
+                    }
+                }
+            }
+        });
+
+    })
+</script>
+
+
 
 {% endblock %}

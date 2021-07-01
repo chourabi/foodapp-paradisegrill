@@ -12,12 +12,14 @@
     <hr>
 
 
-    <table class="table">
+    <table class="table datatable-apply">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Image</th>
                 <th>Nom</th>
+                <th>Sous catégorie</th>
+                
                 <th>Prix</th>
                 <th>Quantité</th>
                 <th>Affichage</th>
@@ -33,8 +35,22 @@
                     <img src="/img/produits/{{ product.photoURL }}" width="50px" alt="">
                 </td>
                 <td>{{ product.label }}</td>
+                <td>{{ product.category }}</td>
+                
                 <td> {{ product.price|format_currency('EUR') }}</td>
-                <td>{{ product.quantity }}</td>
+                <td>
+                    {% if product.quantity > 5 %} 
+                        <span class="text-success" > {{ product.quantity }}</span>
+                    {% endif %}  
+                    {% if product.quantity <= 5 and  product.quantity > 0 %} 
+                        <span class="text-warning" > {{ product.quantity }}</span>
+                    {% endif %}  
+
+                    {% if product.quantity == 0 %} 
+                        <span class="badge badge-danger" > fin stock</span>
+                    {% endif %}  
+                   
+                </td>
                 <td>{{ product.isPromoted ? '<span class="bg-warning badge status-badge">En premier</span>' : '<span class="bg-info badge status-badge">normal</span>' }}</td>
                 
                 <td>{{ product.isActive ? '<span class="bg-success badge status-badge">activé</span>' : '<span class="bg-danger badge status-badge">désactivé</span>' }}</td>

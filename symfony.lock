@@ -115,6 +115,12 @@
             "./config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "mike42/escpos-php": {
+        "version": "v3.0"
+    },
+    "mike42/gfx-php": {
+        "version": "v0.6"
+    },
     "monolog/monolog": {
         "version": "2.2.0"
     },

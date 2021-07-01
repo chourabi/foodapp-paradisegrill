@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Transactions{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <a href="{{ path('transactions_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1 class="h3 mb-4 text-gray-800">Modfier Transaction</h1>
+
+    {{ include('transactions/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+
+
+    {{ include('transactions/_delete_form.html.twig') }}
+</div>
+
+{% endblock %}

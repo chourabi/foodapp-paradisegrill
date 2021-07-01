@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Transactions{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <a href="{{ path('transactions_index') }}"><i class="fas fa-chevron-left"></i> Retour</a>
+    <h1>Ajouter une nouvelle transactions</h1>
+
+    {{ include('transactions/_form.html.twig') }}
+
+</div>
+{% endblock %}
